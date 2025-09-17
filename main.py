@@ -17,6 +17,7 @@ class SoftwareRender:
         self.height_width, self.height_height = self.width // 2, self.height // 2
         self.fps = 60 # frame per second is 60 - i can understand this
         self.clock = pygame.time.Clock()
+        self.create_object()
 
     def draw(self):
         # fill the screen with lightblue
@@ -36,6 +37,9 @@ class SoftwareRender:
             pygame.display.flip()
             self.clock.tick(self.fps)
     
+    def create_object(self):
+        self.object = Object3D(self)
+
 if __name__ == '__main__':
     app = SoftwareRender()
     app.run()
