@@ -1,4 +1,6 @@
 import pygame as pygame
+from camera import *
+from camera_projection import *
 from threed_main import *
 
 class SoftwareRender:
@@ -14,15 +16,16 @@ class SoftwareRender:
         self.resolution = self.width, self.height = 500, 400
         self.screen = pygame.display.set_mode(self.resolution)
 
-        self.height_width, self.height_height = self.width // 2, self.height // 2
+        self.H_WIDTH, self.H_HEIGHT = self.width // 2, self.height // 2
+
         self.fps = 60 # frame per second is 60 - i can understand this
         self.clock = pygame.time.Clock()
         self.create_object()
 
     def draw(self):
         # fill the screen with lightblue
-
         self.screen.fill(pygame.Color('lightblue'))
+        self.object.draw()
 
     def run(self):
         # self.draw() → paints the screen lightblue
@@ -38,7 +41,12 @@ class SoftwareRender:
             self.clock.tick(self.fps)
     
     def create_object(self):
+        self.camera = Camera(self, [0.5, 1, -4])
+        self.projection = Projection(self)
         self.object = Object3D(self)
+        # rotating around the y axis
+        self.object.translate([0.2, 0.4, 0.2])
+        self.object.rotate_y(math.pi/6)
 
 if __name__ == '__main__':
     app = SoftwareRender()
