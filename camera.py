@@ -28,7 +28,7 @@ class Camera:
         self.near_plane = 0.1
         self.far_plane = 100
         self.moving_speed = 0.02
-        self.rotation_speed = 0.05
+        self.rotation_speed = 0.01
 
     # controll to move around
     def control(self):
@@ -46,6 +46,26 @@ class Camera:
         if key[pg.K_w]:
             self.vi_tri -= self.up * self.moving_speed
 
+        if key[pg.K_j]:
+            self.camera_yaw(-self.rotation_speed)
+        if key[pg.K_l]:
+            self.camera_yaw(self.rotation_speed)
+        if key[pg.K_i]:
+            self.camera_pitch(-self.rotation_speed)
+        if key[pg.K_k]:
+            self.camera_pitch(self.rotation_speed)
+
+    def camera_yaw(self, angle):
+        rotate = rotate_y(angle)
+        self.forward =self.forward @ rotate
+        self.right = self.right @ rotate
+        self.up = self.up @ rotate
+
+    def camera_pitch(self, angle):
+        rotate = rotate_x(angle)
+        self.forward =self.forward @ rotate
+        self.right = self.right @ rotate
+        self.up = self.up @ rotate
 
     def dich_chuyen_matrix(self):
         x, y, z, w = self.vi_tri
