@@ -27,6 +27,25 @@ class Camera:
         # - Anything outside this range won't be rendered.
         self.near_plane = 0.1
         self.far_plane = 100
+        self.moving_speed = 0.02
+        self.rotation_speed = 0.05
+
+    # controll to move around
+    def control(self):
+        key=pg.key.get_pressed()
+        if key[pg.K_RIGHT]:
+            self.vi_tri += self.right * self.moving_speed
+        if key[pg.K_LEFT]:
+            self.vi_tri -= self.right * self.moving_speed
+        if key[pg.K_UP]:
+            self.vi_tri += self.forward * self.moving_speed
+        if key[pg.K_DOWN]:
+            self.vi_tri -= self.forward * self.moving_speed
+        if key[pg.K_w]:
+            self.vi_tri += self.up * self.moving_speed
+        if key[pg.K_s]:
+            self.vi_tri -= self.up * self.moving_speed
+
 
     def dich_chuyen_matrix(self):
         x, y, z, w = self.vi_tri

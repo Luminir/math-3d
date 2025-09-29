@@ -35,6 +35,7 @@ class SoftwareRender:
 
         while True:
             self.draw()
+            self.camera.control()
             [exit() for i in pygame.event.get() if i.type == pygame.QUIT]
             pygame.display.set_caption(str(self.clock.get_fps()))
             pygame.display.flip()
