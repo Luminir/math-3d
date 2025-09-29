@@ -25,8 +25,7 @@ class SoftwareRender:
     def draw(self):
         # fill the screen with lightblue
         self.screen.fill(pygame.Color('lightblue'))
-        self.world_axes.draw()
-        self.axes.draw()
+        
         self.object.draw()
 
     def run(self):
@@ -44,17 +43,22 @@ class SoftwareRender:
             self.clock.tick(self.fps)
     
     def create_object(self):
-        self.camera = Camera(self, [0.5, 1, -4])
+        self.camera = Camera(self, [-5, 5, -50])
         self.projection = Projection(self)
-        self.object = Object3D(self)
-        # rotating around the y axis
-        self.object.translate([0.2, 0.4, 0.2])
-        self.axes = Axes(self)
-        self.axes.translate([0.7, 0.9, 0.7])
-        self.world_axes = Axes(self)
-        self.world_axes.movement_flag = False
-        self.world_axes.scale(2.5)
-        self.world_axes.translate([0.0001, 0.0001, 0.0001])
+        objecFile='public/mustang.obj'
+        self.object = self.get_object_from_file(objecFile)
+
+    def get_object_from_file(self, filename):
+        vertex, faces = [], []
+        with open(filename) as f:
+            for line in f:
+                if line.startswith('v '):  # vertex line
+                    vertex.append([float(i) for i in line.split()[1:]] + [1])
+                elif line.startswith('f'):  # face line
+                    faces_ = line.split()[1:]
+                    faces.append([int(face_.split('/')[0]) - 1 for face_ in faces_])
+        return Object3D(self, vertex, faces)
+
 
 if __name__ == '__main__':
     app = SoftwareRender()
