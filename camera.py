@@ -41,9 +41,9 @@ class Camera:
             self.vi_tri += self.forward * self.moving_speed
         if key[pg.K_DOWN]:
             self.vi_tri -= self.forward * self.moving_speed
-        if key[pg.K_w]:
-            self.vi_tri += self.up * self.moving_speed
         if key[pg.K_s]:
+            self.vi_tri += self.up * self.moving_speed
+        if key[pg.K_w]:
             self.vi_tri -= self.up * self.moving_speed
 
 
